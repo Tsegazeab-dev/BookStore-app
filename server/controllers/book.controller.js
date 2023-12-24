@@ -34,3 +34,19 @@ export const getBookById = async(req, res, next) =>{
     }
 }
 
+
+export const updateBook = async (req, res, next) =>{
+    try {
+        const id = req.params.id;
+        const updatedBook = await BookModel.findByIdAndUpdate(id, {
+            $set: {
+                title: req.body.title,
+                author: req.body.author,
+                publishedYear: req.body.publishedYear,
+              }
+        }, {new: true})
+        res.status(200).send(updatedBook)
+    } catch (error) {
+        next(error)
+    }
+}
