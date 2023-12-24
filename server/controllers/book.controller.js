@@ -14,3 +14,23 @@ export const addBooks = async (req, res, next)=>{
     }
 }
 
+export const allBooks = async (req, res, next) =>{
+    try {
+        const books = await BookModel.find({});
+        res.status(200).send({count: books.length, data: books})
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+export const getBookById = async(req, res, next) =>{
+    const id = req.params.id
+    try {
+        const book = await BookModel.findById(id)
+        res.status(200).send(book)
+    } catch (error) {
+        next(error)
+    }
+}
+
