@@ -50,3 +50,14 @@ export const updateBook = async (req, res, next) =>{
         next(error)
     }
 }
+
+export const deleteBook = async (req, res, next) =>{
+    const id = req.params.id
+    try {
+       const result = await BookModel.findByIdAndDelete(id);
+         res.status(200).json({message :'Book deleted successfully'})
+    } catch (error) {
+        next(error)
+    }
+    
+}
