@@ -16,8 +16,8 @@ const TableView = ({books}) => {
               </tr>
             </thead>
             <tbody>
-              {books.map((book, index)=>(
-                <tr key={index} className="text-center h-8">
+              {books?.map((book, index)=>(
+                <tr key={book._id} className="text-center h-8">
                   <td className="border border-slate-700 rounded-md">{index + 1}</td>
                   <td className="border border-slate-700 rounded-md">{book.title}</td>
                   <td className="border border-slate-700 rounded-md">{book.author}</td>

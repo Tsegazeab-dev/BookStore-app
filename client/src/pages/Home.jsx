@@ -9,7 +9,8 @@ import CardView from "../components/home/CardView";
 function Home() {
   const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
-  const [viewOption, setViewOption] = useState('card')
+  const [viewOption, setViewOption] = useState('card');
+  
   useEffect(() => {
     setLoading(true);
 

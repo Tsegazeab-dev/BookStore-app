@@ -1,6 +1,6 @@
 import mongoo from 'mongoose'
 
-const bookSchema = mongoo.Schema({
+const bookSchema = new mongoo.Schema({
     title: { type: String, required: true }, 
     author: { type: String, required: true },
     publishedYear: {type : Number, required:true}

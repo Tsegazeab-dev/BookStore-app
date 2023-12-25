@@ -27,7 +27,8 @@ export const allBooks = async (req, res, next) =>{
 export const getBookById = async(req, res, next) =>{
     const id = req.params.id
     try {
-        const book = await BookModel.findById(id)
+        const book = await BookModel.findById(id);
+        if(!book) next(errorHandler(404, "Book not found"))
         res.status(200).send(book)
     } catch (error) {
         next(error)
@@ -54,7 +55,7 @@ export const updateBook = async (req, res, next) =>{
 export const deleteBook = async (req, res, next) =>{
     const id = req.params.id
     try {
-       const result = await BookModel.findByIdAndDelete(id);
+        const result = await BookModel.findByIdAndDelete(id);
          res.status(200).json({message :'Book deleted successfully'})
     } catch (error) {
         next(error)
