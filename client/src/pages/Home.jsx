@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Spinner from '../components/Spinner';
 import { MdLibraryAdd } from "react-icons/md";
@@ -10,7 +10,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
   const [viewOption, setViewOption] = useState('card');
-  
+
   useEffect(() => {
     setLoading(true);
 
