@@ -7,7 +7,7 @@ export const addBooks = async (req, res, next)=>{
     
     try{
         const newBook = await BookModel.create( {title, author, publishedYear})
-        res.status(201).send(newBook)
+        res.status(201).json(newBook)
     
     }catch(err){
         next(err)
@@ -17,7 +17,7 @@ export const addBooks = async (req, res, next)=>{
 export const allBooks = async (req, res, next) =>{
     try {
         const books = await BookModel.find({});
-        res.status(200).send({count: books.length, data: books})
+        res.status(200).json({count: books.length, data: books})
     } catch (error) {
         next(error)
     }
@@ -29,7 +29,7 @@ export const getBookById = async(req, res, next) =>{
     try {
         const book = await BookModel.findById(id);
         if(!book) next(errorHandler(404, "Book not found"))
-        res.status(200).send(book)
+        res.status(200).json(book)
     } catch (error) {
         next(error)
     }
@@ -46,7 +46,7 @@ export const updateBook = async (req, res, next) =>{
                 publishedYear: req.body.publishedYear,
               }
         }, {new: true})
-        res.status(200).send(updatedBook)
+        res.status(200).json(updatedBook)
     } catch (error) {
         next(error)
     }
