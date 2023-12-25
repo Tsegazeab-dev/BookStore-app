@@ -12,16 +12,29 @@ function Home() {
   const [viewOption, setViewOption] = useState('card')
   useEffect(() => {
     setLoading(true);
-    axios
-      .get("/api/book/all-books")
-      .then((res) => {
-        setBooks(res.data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("Axios error", err);
-        setLoading(false);
-      });
+
+    fetch(`/api/book/all-books`)
+    .then(res => res.json())
+    .then((res)=>{
+      setLoading(false);
+      setBooks(res.data);
+    })
+    .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
+
+
+    // axios
+    //   .get("/api/book/all-books")
+    //   .then((res) => {
+    //     setBooks(res.data.data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log("Axios error", err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   return (

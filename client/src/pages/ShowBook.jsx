@@ -11,16 +11,29 @@ function ShowBook() {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:5000/api/book/get-book/${id}`)
+
+    fetch(`/api/book/get-book/${id}`)
+      .then((res) => res.json())
       .then((res) => {
-        setBook(res.data);
         setLoading(false);
+        setBook(res);
+        
       })
       .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+            setLoading(false);
+            console.log(error);
+            
+          });
+    // axios
+    //   .get(`/api/book/get-book/${id}`)
+    //   .then((res) => {
+    //     setBook(res.data);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setLoading(false);
+    //   });
   }, []);
   return (
     <div className="p-4">

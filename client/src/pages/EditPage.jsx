@@ -8,24 +8,36 @@ import { useSnackbar } from "notistack";
 function EditPage() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [prevData, setPrevData] = useState({})
+  const [prevData, setPrevData] = useState({});
   const navigate = useNavigate();
-  const formRef = useRef(null)
+  const formRef = useRef(null);
   const { id } = useParams();
-  const {enqueueSnackbar} = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
 
- useEffect(()=>{
-  setLoading(true);
-  axios.get(`/api/book/get-book/${id}`)
-  .then((res)=>{
-    setPrevData(res.data)
-    setLoading(false)
-  })
-  .catch(err => {
-    console.log("Error getting book data", err);
-    setLoading(false)
-  })
- },[])
+  useEffect(() => {
+    setLoading(true);
+
+    fetch(`/api/book/get-book/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPrevData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error getting book data", err);
+        setLoading(false);
+      });
+
+    // axios.get(`/api/book/get-book/${id}`)
+    // .then((res)=>{
+    //   setPrevData(res.data)
+    //   setLoading(false)
+    // })
+    // .catch(err => {
+    //   console.log("Error getting book data", err);
+    //   setLoading(false)
+    // })
+  }, []);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,27 +46,51 @@ function EditPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios
-      .put(`/api/book/update/${id}`, formData)
-      .then(() => {
-        setLoading(false);
+
+    fetch(`/api/book/update/${id}`, {
+      method : 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body   : JSON.stringify(formData),
+    })
+    .then((res)=>res.json())
+    .then(()=>{
+      setLoading(false);
         formRef.current.reset();
-        enqueueSnackbar('Book updated successfully', {variant : "success"})
-        navigate('/');
-      })
-      .catch((err) => {
-        setLoading(false);
-        enqueueSnackbar('An error occurred while updating the book', { variant:"error" });console.log("Error in editing book", err.message);
+        enqueueSnackbar("Book updated successfully", { variant: "success" });
+        navigate("/");
+    })
+    .catch((err) => {
+          setLoading(false);
+          enqueueSnackbar("An error occurred while updating the book", {
+            variant: "error",
+          });
+          console.log("Error in editing book", err.message);
+        });
+
         
-      });
+    // axios
+    //   .put(`/api/book/update/${id}`, formData)
+    //   .then(() => {
+    //     setLoading(false);
+    //     formRef.current.reset();
+    //     enqueueSnackbar("Book updated successfully", { variant: "success" });
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     setLoading(false);
+    //     enqueueSnackbar("An error occurred while updating the book", {
+    //       variant: "error",
+    //     });
+    //     console.log("Error in editing book", err.message);
+    //   });
   };
   return (
     <div className="p-4">
       <BackButton />
       <h1 className="text-3xl my-4">Edit Book</h1>
-      {loading ? <Spinner /> : ''}
+      {loading ? <Spinner /> : ""}
       <form
-      ref={formRef}
+        ref={formRef}
         onSubmit={handleSubmit}
         className="flex flex-col border-2 border-sky-400 rounded-xl max-w-lg p-4 mx-auto"
       >

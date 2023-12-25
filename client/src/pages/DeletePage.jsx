@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -12,21 +12,38 @@ function DeletePage() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     setLoading(true);
 
-    axios
-      .delete(`/api/book/delete/${id}`)
-      .then(() => {
-        setLoading(false);
+    try {
+      const res = await fetch(`/api/book/delete/${id}`, {
+        method: 'DELETE'
+      });
+      await res.json();
+      if (res.ok) {
+       setLoading(false);
         enqueueSnackbar("Book deleted successfully", { variant: "success" });
         navigate("/");
-      })
-      .catch((e) => {
-        setLoading(false);
+      }
+      
+    } catch (error) {
+      setLoading(false);
         enqueueSnackbar("Error deleting book", { variant: "error" });
-        console.log(e);
-      });
+        console.error(error);
+    }
+
+    // axios
+    //   .delete(`/api/book/delete/${id}`)
+    //   .then(() => {
+    //     setLoading(false);
+    //     enqueueSnackbar("Book deleted successfully", { variant: "success" });
+    //     navigate("/");
+    //   })
+    //   .catch((e) => {
+    //     setLoading(false);
+    //     enqueueSnackbar("Error deleting book", { variant: "error" });
+    //     console.log(e);
+    //   });
   };
   return (
     <div className="p-4">

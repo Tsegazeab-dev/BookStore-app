@@ -8,18 +8,18 @@ import path from 'path'
 dotenv.config();
 
 const port = process.env.PORT
-const __dirname = path.resolve('..');
+// const __dirname = path.resolve('..');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// app.use(express.static(path.join(__dirname, '/client/dist')));
 
-app.use('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
-})
+// app.use('*', (req, res)=>{
+//     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+// })
 
 // connect to Mongoo
 mongoo.connect(process.env.MONGOO_URL)

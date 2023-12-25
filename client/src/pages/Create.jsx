@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+// import axios from 'axios'
 import BackButton from '../components/BackButton'
 import { useSnackbar } from "notistack";
 
@@ -14,21 +14,37 @@ const Create = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    axios
-      .post(`/api/book/add-books`, formData)
-      .then(() => {
-        setLoading(false);
+    try {
+      const res = await fetch(`/api/book/add-books`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      setLoading(false);
         enqueueSnackbar("Book added successfully",{variant:"success"})
         navigate("/");
-      })
-      .catch((err) => {
-        setLoading(false)
+
+    } catch (error) {
+      setLoading(false)
         enqueueSnackbar("Error in adding book", {variant: "error"})
-        console.log("Error in adding book", err.message);
-      });
+        console.log("Error in adding book", error.message);
+    }
+    // axios
+    //   .post(`/api/book/add-books`, formData)
+    //   .then(() => {
+    //     setLoading(false);
+    //     enqueueSnackbar("Book added successfully",{variant:"success"})
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     setLoading(false)
+    //     enqueueSnackbar("Error in adding book", {variant: "error"})
+    //     console.log("Error in adding book", err.message);
+    //   });
   };
   return (
     <div className='p-4'>
