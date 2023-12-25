@@ -16,7 +16,7 @@ function DeletePage() {
     setLoading(true);
 
     axios
-      .delete(`http://localhost:5000/api/book/delete/${id}`)
+      .delete(`/api/book/delete/${id}`)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book deleted successfully", { variant: "success" });

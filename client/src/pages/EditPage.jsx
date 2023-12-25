@@ -16,7 +16,7 @@ function EditPage() {
 
  useEffect(()=>{
   setLoading(true);
-  axios.get(`http://localhost:5000/api/book/get-book/${id}`)
+  axios.get(`/api/book/get-book/${id}`)
   .then((res)=>{
     setPrevData(res.data)
     setLoading(false)
@@ -35,7 +35,7 @@ function EditPage() {
     e.preventDefault();
     setLoading(true);
     axios
-      .put(`http://localhost:5000/api/book/update/${id}`, formData)
+      .put(`/api/book/update/${id}`, formData)
       .then(() => {
         setLoading(false);
         formRef.current.reset();

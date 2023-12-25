@@ -18,7 +18,7 @@ const Create = () => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post(`http://localhost:5000/api/book/add-books`, formData)
+      .post(`/api/book/add-books`, formData)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book added successfully",{variant:"success"})

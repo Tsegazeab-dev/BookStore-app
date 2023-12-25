@@ -13,7 +13,7 @@ function Home() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/book/all-books")
+      .get("/api/book/all-books")
       .then((res) => {
         setBooks(res.data.data);
         setLoading(false);
